@@ -28,7 +28,6 @@ public class SlaveBuildFailureStatistic {
     }
     
     public Map<String,String> getFailedJobs(){
-        System.out.println("failed jobs (get): " + failedJobsInRow);
         return failedJobsInRow;
     }
     
@@ -55,19 +54,16 @@ public class SlaveBuildFailureStatistic {
     public void success(){
         resetStatistic();
         reconnectedAndNotSuccess = false;
-        System.out.println("failed jobs (success): " + failedJobsInRow);
     }
     
     public void putOffline(){
         resetStatistic();
         reconnectedAndNotSuccess = false;
-        System.out.println("failed jobs (putOffline): " + failedJobsInRow);
     }
     
     public void reconnect(){
         resetStatistic();
         reconnectedAndNotSuccess = true;
-        System.out.println("failed jobs (reconnect): " + failedJobsInRow);
     }
     
     protected void resetStatistic(){
