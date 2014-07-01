@@ -48,7 +48,7 @@ public class BuildStatisticListener extends RunListener<Run>{
             Logger.getLogger(BuildStatisticListener.class.getName()).log(Level.INFO, "Unreliable slave plugin is nost set");
             return;
         }
-        listener.getLogger().println("Loading slave statistic");
+
         Result r = run.getResult();
         Computer computer = run.getExecutor().getOwner();
         SlaveBuildFailureStatistic slaveStatistic = getSlaveStatistic(computer.getDisplayName());
@@ -66,7 +66,6 @@ public class BuildStatisticListener extends RunListener<Run>{
         }
         if(r.equals(Result.SUCCESS))
             slaveStatistic.success();
-        listener.getLogger().println("Slave statistic loaded");
     }
     
     
