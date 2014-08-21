@@ -34,10 +34,11 @@ import javax.mail.internet.MimeMessage;
  *
  * @author lucinka
  */
- @Extension
+@Extension
 public class BuildStatisticListener extends RunListener<Run>{
 
-   private Set<SlaveBuildFailureStatistic> statistics = new HashSet<SlaveBuildFailureStatistic>();
+    private static final Logger LOGGER = Logger.getLogger(BuildStatisticListener.class.getName());
+    private Set<SlaveBuildFailureStatistic> statistics = new HashSet<SlaveBuildFailureStatistic>();
     
     @Override
     public void onCompleted(Run run, TaskListener listener) {
@@ -45,7 +46,7 @@ public class BuildStatisticListener extends RunListener<Run>{
             return;
         UnreliableSlaveDetection.DescriptorImpl descriptor = (UnreliableSlaveDetection.DescriptorImpl) Hudson.getInstance().getDescriptorOrDie(UnreliableSlaveDetection.class);
         if(descriptor.getSettings().getNumberOfFailureInRow()==0){
-            Logger.getLogger(BuildStatisticListener.class.getName()).log(Level.FINE, "Unreliable slave plugin is not set");
+            LOGGER.log(Level.FINE, "Unreliable slave plugin is not set");
             return;
         }
 
@@ -58,9 +59,9 @@ public class BuildStatisticListener extends RunListener<Run>{
                 try {
                     handleUnreliableSlave(computer, descriptor.getSettings(), slaveStatistic);
                 } catch (IOException ex) {
-                    Logger.getLogger(BuildStatisticListener.class.getName()).log(Level.SEVERE, null, ex);
+                    LOGGER.log(Level.SEVERE, null, ex);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(BuildStatisticListener.class.getName()).log(Level.SEVERE, null, ex);
+                    LOGGER.log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -76,7 +77,7 @@ public class BuildStatisticListener extends RunListener<Run>{
                 reason = reason + " A notification was sent.";
             } catch (MessagingException ex) {
                 reason = reason + " Sending of notification fails.";
-                Logger.getLogger(BuildStatisticListener.class.getName()).log(Level.INFO, "");
+                LOGGER.log(Level.INFO, "");
             }
         }
         final String message = reason;
