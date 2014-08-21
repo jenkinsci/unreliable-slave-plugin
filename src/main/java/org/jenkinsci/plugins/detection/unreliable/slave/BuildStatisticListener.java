@@ -45,7 +45,7 @@ public class BuildStatisticListener extends RunListener<Run>{
             return;
         UnreliableSlaveDetection.DescriptorImpl descriptor = (UnreliableSlaveDetection.DescriptorImpl) Hudson.getInstance().getDescriptorOrDie(UnreliableSlaveDetection.class);
         if(descriptor.getSettings().getNumberOfFailureInRow()==0){
-            Logger.getLogger(BuildStatisticListener.class.getName()).log(Level.INFO, "Unreliable slave plugin is nost set");
+            Logger.getLogger(BuildStatisticListener.class.getName()).log(Level.FINE, "Unreliable slave plugin is not set");
             return;
         }
 
