@@ -51,6 +51,11 @@ public class BuildStatisticListener extends RunListener<Run>{
         }
 
         Result r = run.getResult();
+        if (run.getExecutor() == null) {
+            //This can happen, for example with MavenBuild submodules
+            LOGGER.log(Level.FINE, "{0}: Null Executor. Run is of type {1}, result is {2}, job is {3}",  new Object[] {this.getClass().getName(), run.getClass(), r, run.getParent()});
+            return; //ignore
+        }
         Computer computer = run.getExecutor().getOwner();
         SlaveBuildFailureStatistic slaveStatistic = getSlaveStatistic(computer.getDisplayName());
         if(r.equals(Result.FAILURE) || r.equals(Result.ABORTED)){
